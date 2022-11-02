@@ -14,7 +14,6 @@ const str = "some test string"
 console.log(str[0])
 console.log(str[str.length-1])
 // b
-
 let firtsUpperCase = str.charAt(0).toUpperCase() + str.slice(1)
 let lastUpperCase = firtsUpperCase.split('')
 lastUpperCase[lastUpperCase.length - 1] = firtsUpperCase.charAt(firtsUpperCase.length - 1).toUpperCase()
@@ -31,7 +30,7 @@ function entrance(floatNumber) {
     if (floatNumber >= 1 && floatNumber <= 60) {
         if (floatNumber >= 1 && floatNumber <= 20) {
             console.log("Number of the entrance 1.")
-        } else if (floatNumber >= 21 && floatNumber <= 40) {
+        } else if (floatNumber > 20 && floatNumber <= 40) {
             console.log("Number of the entrance 2.")
         } else {
             console.log("Number of the entrance 3.")
@@ -41,7 +40,6 @@ function entrance(floatNumber) {
         console.log("There is no float with this number.")
     }
 }
-
 function entrance1(floatNumber) {
     if(floatNumber < 1 && floatNumber > 60)
         return 'There is no float with this number.'
@@ -52,7 +50,4 @@ function entrance1(floatNumber) {
     else 
         return 'Number of the entrance 3.'
 }
-
-console.log(entrance1(125))
-
 
