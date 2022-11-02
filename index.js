@@ -54,6 +54,7 @@ function guessTheNumber (num) {
 }
 // ********************************* 4 *********************************
 function findMinMaxSum () {
+    let result = new Object;
     let min = arguments[0], max = arguments[0], sum = arguments[0];
     for (let i = 1; i < arguments.length; i++) {
         if (typeof(arguments[i]) === undefined || isNaN(arguments[i])) {
@@ -67,28 +68,32 @@ function findMinMaxSum () {
         } 
         sum = sum + arguments[i]
     }
+    result.min = min
+    result.max = max
+    result.sum = sum
+    return result
 }
 // ********************************* 5 *********************************
-function quantityOfWaterLoop() {
+function quantityOfWaterLoop(array) {
     let maxLeft = 0
     let maxRight = 0
     let left = 0
-    let right = arguments.length - 1
+    let right = array.length - 1
     let water = 0
 
     while (left < right) {
-        if(arguments[left] > maxLeft) {
-            maxLeft = arguments[left]
+        if(array[left] > maxLeft) {
+            maxLeft = array[left]
         }
-        if(arguments[right] > maxRight) {
-            maxRight = arguments[right]
+        if(array[right] > maxRight) {
+            maxRight = array[right]
         }
         if(maxLeft >= maxRight) {
-            water += maxRight - arguments[right]
+            water += maxRight - array[right]
             right--
         }
         else{
-            water += maxLeft - arguments[left]
+            water += maxLeft - array[left]
             left++
         }
     }
