@@ -53,76 +53,50 @@ function guessTheNumber (num) {
     }
 }
 // ********************************* 4 *********************************
-function findMinMaxSum () {
-    let min = arguments[0], max = arguments[0], sum = arguments[0];
-    for (let i = 1; i < arguments.length; i++) {
-        if (typeof(arguments[i]) === undefined || isNaN(arguments[i])) {
+function findMinMaxSum (array) {
+    let min = array[0], max = array[0], sum = array[0];
+    for (let i = 1; i < array.length; i++) {
+        if (typeof(array[i]) === undefined || isNaN(array[i])) {
             continue
         }
-        if (arguments[i] > max) {
-            max = arguments[i]
+        if (array[i] > max) {
+            max = array[i]
         }
-        if (arguments[i] < min) {
-            min = arguments[i]
+        if (array[i] < min) {
+            min = array[i]
         } 
-        sum = sum + arguments[i]
+        sum = sum + array[i]
+    }
+    return {
+        min,
+        max,
+        sum
     }
 }
 // ********************************* 5 *********************************
-function quantityOfWaterLoop() {
+function quantityOfWaterLoop(array) {
     let maxLeft = 0
     let maxRight = 0
     let left = 0
-    let right = arguments.length - 1
+    let right = array.length - 1
     let water = 0
 
     while (left < right) {
-        if(arguments[left] > maxLeft) {
-            maxLeft = arguments[left]
+        if(array[left] > maxLeft) {
+            maxLeft = array[left]
         }
-        if(arguments[right] > maxRight) {
-            maxRight = arguments[right]
+        if(array[right] > maxRight) {
+            maxRight = array[right]
         }
         if(maxLeft >= maxRight) {
-            water += maxRight - arguments[right]
+            water += maxRight - array[right]
             right--
         }
         else{
-            water += maxLeft - arguments[left]
+            water += maxLeft - array[left]
             left++
         }
     }
-    return water
-}
-
-function quantityOfWater() {
-    maxLeft = 0
-    maxRight = 0
-    left = 0
-    numbers = Array.from(arguments)
-    let water = 0
-    let countWater = numbers.map((firstItem, index, arr) => {
-        lastItem = arr.pop()
-        if(firstItem > maxLeft) {
-            maxLeft = firstItem
-        }
-        if(lastItem > maxRight) {
-            maxRight = lastItem
-        }
-        if(maxLeft >= maxRight) {
-            water += maxRight - lastItem
-            if(firstItem < maxRight) {
-                water += maxLeft - firstItem
-            }
-        }
-        else{
-            water += maxLeft - firstItem
-            if(lastItem < maxLeft) {
-                water += maxLeft - lastItem
-            }
-        }
-    })
-    console.log(water)
     return water
 }
 
