@@ -20,11 +20,11 @@ const strings = {
     },
 
     getStringLength: function() {
-        return (this.str).length
+        return this.str.length
     },
 
     getReversedString: function() {
-        return (this.str).split('').reverse().join('')
+        return this.str.split('').reverse().join('')
     },
 
 }

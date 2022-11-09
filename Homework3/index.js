@@ -1,4 +1,9 @@
 // ****************** 2. HOF - High order functions ******************
+
+import {strings} from "./strings.js";
+import {calc} from "./calc.js";
+
+
 // 1
 function joinStrings(arr, fn) {
     let newStr = ''
@@ -19,10 +24,7 @@ console.log(joinStrings(['my', 'name', 'is', 'Vasya'], strGen))
 
 // 2
 function getArrMultipleTen(arr, fn) {
-    let newArr = []
-    for (let item of arr) {
-        newArr.push(fn(item))
-    }
+    let newArr = arr.map(multipleTen)
     return newArr
 }
 
@@ -142,12 +144,6 @@ const convertToObject = ((num) => {
 // 1
 function minus (num) {
     return function(n){
-        if (isNaN(num)) {
-            num = 0
-        }
-        if (isNaN(n)) {
-            n = 0
-        }
         return num - n
     }
 }
@@ -175,18 +171,16 @@ const multiply =  multiplyMaker(2);
 
 
 // 3
-// import { strings } from "./strings.js";
 
-// strings.setString('dhkflo4ogy')
-// strings.getString()
-// strings.getStringLength()
-// strings.getReversedString()
+strings.setString('dhkflo4ogy')
+strings.getString()
+strings.getStringLength()
+strings.getReversedString()
 // // 4
 
 
-// import {calc} from "./calc.js";
 
-// calc.setValue(10).add(5).multiple(2).divide(10).pow(3)
+calc.setValue(10).add(5).multiple(2).divide(10).pow(3)
 
 // ****************** 6. ******************
 
