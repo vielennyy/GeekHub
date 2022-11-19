@@ -16,6 +16,7 @@ window.addEventListener('load', () => {
             return (a.timeStampData < b.timeStampData ? 1 : -1)
         })
     }
+    sortByData()
     
     function getData (data) {
         return data.getHours() + ":"  
@@ -39,20 +40,8 @@ window.addEventListener('load', () => {
         }
     }
 
-    function getDragAfterElement(todoList, y) {
-        const draggableElements = [...todoList.querySelectorAll('.todo-item:not(.dragging)')]
+    
 
-        return draggableElements.reduce((closest, child) => {
-            const box = child.getBoundingClientRect()
-            const offset = y - box.top - box.height/2
-            // console.log(offset)
-            if (offset < 0 && offset > closest.offset) {
-                return { offset: offset, element: child,}
-            } else {
-                return closest
-            }
-        }, {offset: Number.NEGATIVE_INFINITY}).element
-    }
 
     function showToDo () {
         let todoList = document.querySelector('.todo-list')
@@ -126,56 +115,68 @@ window.addEventListener('load', () => {
                 localStorage.setItem('todos', JSON.stringify(todoListArray));
                 showToDo()
             })
-
-            filterOption.addEventListener('change', function () {
-                if(filterOption.value == "name") {
-                    sortByName ()
-                    showToDo() 
-                } else {
-                    sortByData()
-                    showToDo()
-                }
-            }) 
-
+            
             todoItem.draggable = true
-
+            const draggableElements = [...todoList.querySelectorAll('.todo-item')]
+            
             todoItem.addEventListener('dragstart', () => {
-                // console.log("Drag start!")
                 todoItem.classList.add('dragging')
             })
 
-            todoItem.addEventListener('dragend', () =>{
+            draggableElements.map((element) => 
+                element.addEventListener('dragover', e => {
+                    
+                    e.preventDefault()
+                    const draggable = document.querySelector('.dragging')
+                    const dragablePos = draggable.getBoundingClientRect()
+                    const offset = e.clientY - dragablePos.top - dragablePos.height/2
+                        if (element.nextSibling == null) {
+                            todoList.appendChild(draggable)
+                        } 
+                        else if (element.previousElementSibling == null) {
+                            todoList.insertBefore(draggable, element)              
+                        }
+                        else {
+                            if (offset > 0) {
+                                todoList.insertBefore(draggable, element.nextElementSibling)
+                            }
+                            else {
+                                todoList.insertBefore(draggable, element.previousSibling)
+                            }
+                        }
+                })
+            )
+
+            todoItem.addEventListener('dragend', (e) =>{
+                e.preventDefault()
                 todoItem.classList.remove('dragging')
             })
 
-            todoList.addEventListener('dragover', (event) => {
-                event.preventDefault()
-                const afterElement = getDragAfterElement(todoList, event.clientY)
-                const draggable = document.querySelector('.dragging')
-                // console.log(afterElement)
-                if (afterElement == null) {
-                    todoList.appendChild(draggable)
-                } else {
-                    todoList.insertBefore(draggable, afterElement)
-                }
-            })
         });
     }
 
+    filterOption.addEventListener('change', function () {
+        if(filterOption.value === "name") {
+            sortByName ()
+            showToDo() 
+        } 
+        else {
+            sortByData()
+            showToDo()
+        }
+    }) 
+
     const submitFormHandler = (event) => {
         event.preventDefault()
-
         if (!input.value) {
             alert("Please enter your todo first!")
         }
-
         toDo = createToDoObj()
         todoListArray.push(toDo)
         localStorage.setItem('todos', JSON.stringify(todoListArray))
         showToDo()
         input.value = ''
     }
-
     showToDo()
     form.addEventListener('submit', submitFormHandler)   
     
