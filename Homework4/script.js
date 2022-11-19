@@ -16,7 +16,6 @@ window.addEventListener('load', () => {
             return (a.timeStampData < b.timeStampData ? 1 : -1)
         })
     }
-    sortByData()
     
     function getData (data) {
         return data.getHours() + ":"  
@@ -39,9 +38,6 @@ window.addEventListener('load', () => {
                 completed,
         }
     }
-
-    
-
 
     function showToDo () {
         let todoList = document.querySelector('.todo-list')
@@ -118,8 +114,11 @@ window.addEventListener('load', () => {
             
             todoItem.draggable = true
             const draggableElements = [...todoList.querySelectorAll('.todo-item')]
-            
+            let idxOfDragable
+            let idxOfDroppable
+
             todoItem.addEventListener('dragstart', () => {
+                idxOfDragable = draggableElements.indexOf(todoItem)
                 todoItem.classList.add('dragging')
             })
 
@@ -148,7 +147,16 @@ window.addEventListener('load', () => {
             )
 
             todoItem.addEventListener('dragend', (e) =>{
+                let newOrder = [... todoList.querySelectorAll('.todo-item')]
                 e.preventDefault()
+                // console.log(e.target)
+                idxOfDroppable = newOrder.indexOf(e.target)
+                // console.log(idxOfDragable, idxOfDroppable)
+                let replacedElement = todoListArray[idxOfDragable]
+                todoListArray.splice(idxOfDragable, 1)
+                todoListArray.splice(idxOfDroppable, 0, replacedElement)
+                localStorage.setItem('todos', JSON.stringify(todoListArray));
+                // console.log(todoListArray)
                 todoItem.classList.remove('dragging')
             })
 
