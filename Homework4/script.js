@@ -180,7 +180,7 @@ window.addEventListener('load', () => {
             alert("Please enter your todo first!")
         }
         toDo = createToDoObj()
-        todoListArray.push(toDo)
+        todoListArray.unshift(toDo)
         localStorage.setItem('todos', JSON.stringify(todoListArray))
         showToDo()
         input.value = ''
