@@ -13,7 +13,7 @@
         position: absolute;
         left: 59%;
         right: 20%;
-        top: 55%;
+        top: 370px;
         bottom: 84.53%;
         width: 33%;
         height: 33%;
@@ -25,7 +25,7 @@
         width: 37%;
         height: 37%;
         left: 69px;
-        top: 417px;
+        top: 440px;
         mix-blend-mode: luminosity;
     }
     }
@@ -79,7 +79,7 @@
     }
     .partner_hero_image_right {
         left: 70%;
-        top: 53%;
+        top: 310px;
         width: 22%;
         height: 25%;
     }
@@ -89,7 +89,7 @@
         width: 30%;
         height: 37%;
         left: 40px;
-        top: 55%;
+        top: 310px;
     }
     .footer-table {
         max-width: 542px;
@@ -217,7 +217,7 @@
     }
     .partner_hero_image_right {
         left: 70%;
-        top: 50%;
+        top: 330px;
         width: 25%;
         height: 25%;
     }
@@ -227,7 +227,7 @@
         width: 35%;
         height: 37%;
         left: 40px;
-        top: 50%;
+        top: 330px;
     }
     
     .main-block__buttons{
@@ -308,7 +308,7 @@
     }
     .partner_hero_image_right {
         left: 70%;
-        top: 55%;
+        top: 340px;
         width: 25%;
         height: 25%;
     }
