@@ -21,8 +21,6 @@ async function showUser() {
     // let createdAt = user.created_at
     // let login = user.login
     // let userName = user.name
-    // console.log(reposURL,avatarURL,createdAt,login,userName)
-    // console.log(user)
     
 
     let profileInfo = document.querySelector('.profile-info')
@@ -46,7 +44,6 @@ async function showUser() {
     let profileRepos = document.querySelector('.profile-repos')
     let showRepoBTN = document.querySelector('.repos')
     let repos = await getData(user.repos_url)
-    // console.log(repos)
 
     async function showRepos() {
         repos.forEach(element => {
@@ -56,16 +53,14 @@ async function showUser() {
             repo.innerHTML = `${element.name}`
             profileRepos.appendChild(repo)
             async function showLastCommit() {
-                // let link = element.commits_url.slice(0, -6)
                 let commits = await getData(element.commits_url.slice(0, -6))
-                console.log(commits)
+                let data = new Date(commits[0].commit.committer.date)
+                data = makeData(data)
                 let commit = document.createElement('div')
                 commit.classList.add('last-commit')
-                // commit.innerHTML = `Last commit in this repository was made ${commits[0].commit.commiter.date}`
-                let data = new Data(commits[0].commit.committer.date)
-                console.log(commits[0].commit.committer.date)
-                // .commit.commiter.date
-                // element.appendChild(commit)
+                commit.innerHTML = `Last commit in this repository was made ${data}`
+                console.log(data)
+                this.appendChild(commit)
             }
             repo.addEventListener('click', showLastCommit)
 
