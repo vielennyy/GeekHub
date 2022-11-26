@@ -1,9 +1,10 @@
 //  1. isPrime - Returns true or false, indicating whether the given number is prime.
 function isPrime(n) {
     if(n === 1 || n === 0) return false
-    for (let i = 2; i*i <= n && n % i; i++)
-    if (i*i > n) return true
-    return false
+    for (let i = 2; i*i <= n; i++) {
+        if (n%i == 0) return false
+    }
+    return true
 }
 // isPrime(0)                          // false
 // isPrime(1)                          // false
@@ -90,13 +91,13 @@ function isPalindrome(str) {
     if (str === '' || str.length === 1) return true
     let newStr = str.toLowerCase().split(' ').join('')
     let compareStr = reverse(newStr)
-    if(newStr === compareStr) return true
-    return false
+    return newStr === compareStr
 }
-// isPalindrome('')                                // true
-// isPalindrome('abcdcba')                         // true
-// isPalindrome('abcd')                            // false
-// isPalindrome('A man a plan a canal Panama')     // true
+// console.log(isPalindrome(''))                                // true
+// console.log(isPalindrome('abcdcba'))                         // true
+// console.log(isPalindrome('abcd'))                           // false
+// console.log(isPalindrome('A man a plan a canal Panama'))     // true
+// console.log(isPalindrome('eye'))                            //true
 
 // 8. missing - Takes an unsorted array of unique numbers (ie. no repeats) from 1 through some number n, and returns the missing number in the sequence (there are either no missing numbers, or exactly one missing number). Can you do it in O(N) time? Hint: There’s a clever formula you can use.
 function missing (arr) {
