@@ -16,7 +16,8 @@ async function getData(url) {
 }
 
 async function showRepos() {
-    let profileRepos = document.querySelector('.profile-repos')
+    let profileRepos = document.querySelector('.repo-items')
+    profileRepos.innerHTML=''
 
     profileRepos.appendChild(loader)
     loader.style.display = 'block'
@@ -74,17 +75,30 @@ async function showUser() {
     userName.classList.add('user-name')
     userName.innerHTML = `${user.name} / ${user.login}`
     
+    let userWrapper = document.createElement('div')
+    userWrapper.classList.add('user-wrapper')
+
+    let infoWrapper = document.createElement('div')
+    infoWrapper.classList.add('info-wrapper')
+
     let avatarImg = document.createElement('img')
     avatarImg.src = user.avatar_url
     avatarImg.classList.add('user-img')
+
+
     
     let userCreated = document.createElement('div')
     userCreated.classList.add('user-created')
     userCreated.innerHTML = `This profile was created ${user.created_at}`
 
+    let profileRepos = document.querySelector('.profile-repos')
+
     profileInfo.appendChild(userName)
-    profileInfo.appendChild(avatarImg)
-    profileInfo.appendChild(userCreated)
+    profileInfo.appendChild(userWrapper)
+    userWrapper.appendChild(avatarImg)
+    userWrapper.appendChild(infoWrapper)
+    infoWrapper.appendChild(userCreated)
+    infoWrapper.appendChild(profileRepos)
 
     let showRepoBTN = document.querySelector('.repos')
 
