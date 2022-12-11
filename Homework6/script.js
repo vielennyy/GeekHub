@@ -1,11 +1,12 @@
 let profileURL = 'https://api.github.com/users/vielennyy'
+let loader = document.querySelector('.loader')
 
-function makeData (data) {
-    return data.getHours() + ":"  
-    + data.getMinutes() + '\t'
-    + data.getDate() + "/"
-    + (data.getMonth()+1)  + "/" 
-    + data.getFullYear() ;
+function stringifyDate (date) {
+    return date.getHours() + ":"  
+    + date.getMinutes() + '\t'
+    + date.getDate() + "/"
+    + (date.getMonth()+1)  + "/" 
+    + date.getFullYear() ;
 }
 
 async function getData(url) {
@@ -14,15 +15,59 @@ async function getData(url) {
     return profile
 }
 
-async function showUser() {
+async function showRepos() {
+    let profileRepos = document.querySelector('.profile-repos')
+
+    profileRepos.appendChild(loader)
+    loader.style.display = 'block'
+
     let user = await getData(profileURL)
+
+    let repos = await getData(user.repos_url)
+
+    loader.style.display = 'none'
+
+    repos.forEach(element => {
+        let repo = document.createElement('div')
+        repo.classList.add('repo-item')
+        repo.innerHTML = `${element.name}`
+        profileRepos.appendChild(repo)
+        let commit = document.createElement('div')
+        commit.classList.add('last-commit')
+        repo.appendChild(commit)
+
+        async function showLastCommit() {
+            repo.appendChild(loader)
+            loader.style.display = 'block'
+
+            let commits = await getData(element.commits_url.slice(0, -6))
+
+            loader.style.display = 'none'
+
+            let date = new Date(commits[0].commit.committer.date)
+            commitDate = stringifyDate(date)
+            commit.innerHTML = `Last commit in this repository was made ${commitDate}`
+        }
+        
+        repo.addEventListener('click', showLastCommit)
+
+    })
+    return true;
+}
+
+async function showUser() {
+    loader.style.display = 'block'
+
+    let user = await getData(profileURL)
+
+    loader.style.display = 'none'
+
     // let reposURL = user.repos_url
     // let avatarURL = user.avatar_url
     // let createdAt = user.created_at
     // let login = user.login
     // let userName = user.name
     
-
     let profileInfo = document.querySelector('.profile-info')
     
     let userName = document.createElement('div')
@@ -41,34 +86,10 @@ async function showUser() {
     profileInfo.appendChild(avatarImg)
     profileInfo.appendChild(userCreated)
 
-    let profileRepos = document.querySelector('.profile-repos')
     let showRepoBTN = document.querySelector('.repos')
-    let repos = await getData(user.repos_url)
 
-    async function showRepos() {
-        repos.forEach(element => {
-            console.log(element)
-            let repo = document.createElement('div')
-            repo.classList.add('repo-item')
-            repo.innerHTML = `${element.name}`
-            profileRepos.appendChild(repo)
-            async function showLastCommit() {
-                let commits = await getData(element.commits_url.slice(0, -6))
-                let data = new Date(commits[0].commit.committer.date)
-                data = makeData(data)
-                let commit = document.createElement('div')
-                commit.classList.add('last-commit')
-                commit.innerHTML = `Last commit in this repository was made ${data}`
-                console.log(data)
-                this.appendChild(commit)
-            }
-            repo.addEventListener('click', showLastCommit)
-
-        })
-        return true;
-    }
     showRepoBTN.addEventListener('click', showRepos)
-    
 
 }
+
 showUser()
