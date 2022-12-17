@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+*{
+    font-family: 'Anton', sans-serif;
+    letter-spacing:0.2rem;
+}
+
+h1 {
+    font-size: 72px;
+    text-align: center;
+    margin: 50px auto;
+}
+
+.start {
+    background-color: black;
+    color: white;
+    width: 300px;
+    height: 100px;
+    display: block;
+    margin: 200px auto;
+    font-size: 48px;
+    border: none;
+    border-radius: 20px;
+}
+
+.game-wrapper {
+    display: none;
+}
+
+img {
+    width: 300px;
+    height: 300px;
+    margin: 30px 200px;
+}
+
+.display {
+    display: flex;
+    flex-direction: row;
+}
+
+.properties {
+    margin: 70px;
+}
+.property {
+    font-size: 32px;
+    margin: 10px;
+}
+.values {
+    margin: 70px 0;
+}
+.values > div{
+    font-size: 32px;
+    margin: 10px;
+}
+
+.buttons-pannel {
+    margin: 30px 50px;
+}
+
+.buttons-pannel > button {
+    display: block;
+    background-color: black;
+    color: white;
+    margin: 30px;
+    width: 200px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+}
