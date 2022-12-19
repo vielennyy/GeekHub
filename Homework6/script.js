@@ -15,6 +15,19 @@ async function getData(url) {
     return profile
 }
 
+async function showLastCommit(repo, element,commit) {
+    repo.appendChild(loader)
+    loader.style.display = 'block'
+
+    let commits = await getData(element.commits_url.slice(0, -6))
+
+    loader.style.display = 'none'
+
+    let date = new Date(commits[0].commit.committer.date)
+    commitDate = stringifyDate(date)
+    commit.innerHTML = `Last commit in this repository was made ${commitDate}`
+}
+
 async function showRepos() {
     let profileRepos = document.querySelector('.repo-items')
     profileRepos.innerHTML=''
@@ -33,24 +46,15 @@ async function showRepos() {
         repo.classList.add('repo-item')
         repo.innerHTML = `${element.name}`
         profileRepos.appendChild(repo)
+        
         let commit = document.createElement('div')
         commit.classList.add('last-commit')
         repo.appendChild(commit)
-
-        async function showLastCommit() {
-            repo.appendChild(loader)
-            loader.style.display = 'block'
-
-            let commits = await getData(element.commits_url.slice(0, -6))
-
-            loader.style.display = 'none'
-
-            let date = new Date(commits[0].commit.committer.date)
-            commitDate = stringifyDate(date)
-            commit.innerHTML = `Last commit in this repository was made ${commitDate}`
-        }
         
-        repo.addEventListener('click', showLastCommit)
+        
+        repo.addEventListener('click', () => {
+            showLastCommit(repo, element, commit)
+        })
 
     })
     return true;
