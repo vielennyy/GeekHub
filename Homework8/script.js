@@ -1,27 +1,194 @@
 let form = document.querySelector('form')
-let firstName = form.querySelector('.fname').value.trim()
-let lastName = form.querySelector('.lname').value.trim()
-let phoneNumber = form.querySelector('.pnumber').value.trim()
-let email = form.querySelector('.email').value.trim()
-let password = form.querySelector('.password').value.trim()
-let cPassword = form.querySelector('.cpassword').value.trim()
-let submit = form.querySelector('.submit')
 
 // 1
-function isOnlyLatinCharacters(str) {
-    return /^[a-z]$/i.test(str);
+// function isOnlyLatinCharacters(str) {
+//     return /[a-z]$/i.test(str);
+// }
+
+// function isFirstLetterUppercase(str) {
+//     return /^[A-Z]/.test(str);
+// }
+
+// function hasMoreThanTwoCharacters(str) {
+//     return /\w{2,}/.test(str);
+// }
+
+function isValidName(str) {
+    return /^[A-Z]+[a-z]{2,}/.test(str)
 }
 
-function isFirstLetterUppercase(str) {
-    return /^[A-Z]/.test(str);
+// 2
+
+// Ukrainian operators
+// Kyivstar: 067 068 096 097 098
+// Lifecell: 063 073 093
+// Vodafone: 050 066 095 099
+
+function isValidOperator(str) {
+    let number = str.slice(2)
+    return /^067|^068|^096|^097|^098|^063|^073|^093|^050|^066|^095|^099/.test(number)    
 }
 
-function hasMoreThanTwoCharacters(str) {
-    return /{2,}}/.test(str);
+function validateTheNumber(str){
+    let number = str.replace(/\D/g, '')
+    if (/^38/.test(number)) {
+        return number
+    }
+    else {
+        return '38'+ number
+    }
 }
-console.log(firstName)
+
+function isValidLength(str) {
+    return /^\d{12}/.test(str)
+}
+
+function isValidNumber(str) {
+    let number = validateTheNumber(str)
+    if(isValidOperator(number)) {
+        return isValidLength(number)
+    }
+    return false
+}
+
+// 3
+
+// function isValidEmail(str) {
+//     return /^[a-z]+\w+@[\w-]+.[\w-]{2,4}$/g.test(str)
+// }
+function isValidEmail(str) {
+    return /^[a-z]+\w+@[a-z]+.[a-z]{2,4}$/g.test(str)
+}
+
+// 4
+
+function isValidPassword(str) {
+    return /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/.test(str)
+}
+
+// other functions
+
+function showInvalidInput(input) {
+    input.style.border = '2px solid red'
+}
+function showValidInput(input) {
+    input.style.border = '2px solid green'
+}
+
+function insertAfter(node, prevNode) {
+    prevNode.parentNode.insertBefore(node, prevNode.nextSibling);
+}
+
+function showSuccess(){
+    let formBlock = document.querySelector('.form-wrapper')
+    formBlock.style.display = 'none'
+    let validInput = document.querySelector('.valid-input')
+    validInput.style.display = 'block'
+}
+
 function submitFormHandler() {
+    event.preventDefault()
+    let firstName = form.querySelector('.fname')
+    // .value.trim()
+    let lastName = form.querySelector('.lname')
+    // .value.trim()
+    let phoneNumber = form.querySelector('.pnumber')
+    // .value.trim()
+    let email = form.querySelector('.email')
+    // .value.trim()
+    let password = form.querySelector('.password')
+    // .value.trim()
+    let cPassword = form.querySelector('.cpassword')
+    // .value.trim()
+
+    let descriptions = document.querySelectorAll('.error')
+    descriptions.forEach(element => element.style.display = 'none')
+
+    let isCorrectInput = true
+
+    if(!isValidName(firstName.value.trim())){
+        showInvalidInput(firstName)
+        let description = document.createElement('label')
+        description.classList.add('error')
+        description.innerHTML = 'Latin letters only. First symbol must be uppercase'
+        insertAfter(description, firstName)
+        isCorrectInput = false
+    }
+    else {
+        showValidInput(firstName)
+        isCorrectInput = true
+    }
+    if(!isValidName(lastName.value.trim())) {
+        showInvalidInput(lastName)
+        let description = document.createElement('label')
+        description.classList.add('error')
+        description.innerHTML = 'Latin letters only. First symbol must be uppercase'
+        insertAfter(description, lastName)
+        isCorrectInput = false
+    }
+    else {
+        showValidInput(lastName)
+        isCorrectInput = true
+    }
+    if(!isValidNumber(phoneNumber.value.trim())){
+        showInvalidInput(phoneNumber)
+        let description = document.createElement('label')
+        description.classList.add('error')
+        description.innerHTML = 'Invalid length or operator'
+        insertAfter(description, phoneNumber)
+        isCorrectInput = false
+
+    }
+    else {
+        showValidInput(phoneNumber)
+        isCorrectInput = true
+    }
+    if(!isValidEmail(email.value.trim())) {
+        showInvalidInput(email)
+        let description = document.createElement('label')
+        description.classList.add('error')
+        description.innerHTML = 'Latin letters only. First symbol must be lowwercase letter'
+        insertAfter(description, email)
+        isCorrectInput = false
+
+    }
+    else {
+        showValidInput(email)
+        isCorrectInput = true
+    }
+    if(!isValidPassword(password.value.trim())) {
+        showInvalidInput(password)
+        let description = document.createElement('label')
+        description.classList.add('error')
+        description.innerHTML = 'Password consists at least of 8 characters. It should include at least one number, uppercase letter and special character'
+        insertAfter(description, password)
+        isCorrectInput = false
+
+    }
+    else {
+        showValidInput(password)
+        isCorrectInput = true
+    }
+    if(password.value.trim() != cPassword.value.trim()) {
+        showInvalidInput(cPassword)
+        let description = document.createElement('label')
+        description.classList.add('error')
+        description.innerHTML = 'Password isn\'t equal'
+        insertAfter(description, cPassword)
+        isCorrectInput = false
+        
+
+    }
+    else {
+        showValidInput(cPassword)
+        isCorrectInput = true
+    }
+
+    if (isCorrectInput) {
+        showSuccess()
+    }
 
 }
-// form.addEventListener('submit', )
+
+form.addEventListener('submit', submitFormHandler)
 
