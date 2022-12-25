@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 
-class Palette extends Component {
+export class Background extends Component {
     constructor(props) {
         super(props)
     }
 
     render() {
         return (
-            <div className='wrapper'>
-                Hello World!
+            <div onClick = {() => {renderColor}} className='background'>
+                Background
             </div>
         )
     }
