@@ -7,12 +7,12 @@ export class Palette extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            r: 127,
-            g: 127,
-            b: 127,
-        }
-        this.updateState = this.updateState.bind(this)
+        // this.state = {
+        //     r: 127,
+        //     g: 127,
+        //     b: 127,
+        // }
+        // this.updateState = this.updateState.bind(this)
     }
 
     updateState(value) {
@@ -20,12 +20,17 @@ export class Palette extends Component {
 
     }
 
+    ChildToParent(value) {
+        console.log(value)
+    }
+
     render() {
         return (
-            <div onClick= {this.updateState.bind} className='palette'>
+            <div className='palette'>
                 Palette
                 <DominantColor/>
-                <Background/>
+                {/* <Background values={this.state}/> */}
+                <Background ChildToParent={this.ChildToParent}/>
                 <AverageColor/>
 
             </div>
