@@ -8,7 +8,7 @@ export class DominantColor extends Component {
     render() {
         return (
             <div className='dominant-color'>
-                DominantColor
+                {`The dominant color is `}
             </div>
         )
     }
