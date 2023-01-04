@@ -15,8 +15,11 @@ export class Palette extends Component {
             averageR: 127,
             averageG: 127,
             averageB: 127,
-            dominantColor: undefined,
+            dominantColor: 'COLORS ARE EQUAL',
         }
+    }    
+    updateState(value) {
+        this.setState({r: value.r, g: value.g, b: value.b})
 
 
         this.changeColor = this.changeColor.bind(this)
@@ -43,11 +46,6 @@ export class Palette extends Component {
 
     getAverage() {
 
-        // console.log(this.state.counter)
-
-        // console.log(this.state.r, this.state.g, this.state.b)
-        
-
         let r = this.state.r
         let g = this.state.g
         let b = this.state.b
@@ -57,7 +55,6 @@ export class Palette extends Component {
                 averageG: (g + this.state.averageG)/(this.state.counter+1).toFixed(),
                 averageB: (b + this.state.averageB)/(this.state.counter+1).toFixed(),
             })
-            // console.log(r+'+'+this.state.averageR+'='+this.state.averageR)
         }
         else {
             this.setState({
@@ -65,33 +62,28 @@ export class Palette extends Component {
                 averageG: (g + this.state.averageG*this.state.counter+1)/(this.state.counter+1).toFixed(),
                 averageB: (b + this.state.averageB*this.state.counter+1)/(this.state.counter+1).toFixed(),
             })
-            // console.log(r+'+'+this.state.averageR+'='+this.state.averageR)
         }
     }
 
     getDominantColor() {
 
         console.log(this.state.r, this.state.g, this.state.b)
-        // if(this.state.r > (this.state.g + this.state.b)/2) {
-        //     this.setState({dominantColor: 'RED'})
-        //     // return 'RED'
-        // }
-        // else if(this.state.g > (this.state.r + this.state.b)/2) {
-        //     // return 'GREEN'
-        //     this.setState({dominantColor: 'GREEN'})
-        // }
-        // else {
-        //     if(this.state.b > (this.state.r + this.state.b)/2) {
-        //         // return 'BLUE'
-        //         this.setState({dominantColor: 'BLUE'})
-        //     }
-        //     else {
-        //         // return 'COLORS ARE EQUAL'
-        //         this.setState({dominantColor: 'COLORS ARE EQUAL'})
-        //     }
-        // }
+        if(this.state.r > this.state.g && this.state.r > this.state.b) {
+            this.setState({dominantColor: 'RED'})
+        }
+        else if(this.state.g > this.state.r && + this.state.g > this.state.b) {
+            this.setState({dominantColor: 'GREEN'})
+        }
+        else {
+            if(this.state.b > this.state.r && this.state.b > this.state.g) {
+                this.setState({dominantColor: 'BLUE'})
+            }
+            else {
+                this.setState({dominantColor: 'COLORS ARE EQUAL'})
+            }
+        }
+
     }
-    
 
     render() {
         return (
