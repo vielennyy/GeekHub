@@ -27,7 +27,7 @@ export class Palette extends Component {
     getRndInteger() {
         return Math.floor(Math.random() * (127 + 1) );
     }
-    
+
 
     changeColor() {
         let r = this.getRndInteger()
