@@ -1,18 +1,5 @@
 let form = document.querySelector('form')
 
-// 1
-// function isOnlyLatinCharacters(str) {
-//     return /[a-z]$/i.test(str);
-// }
-
-// function isFirstLetterUppercase(str) {
-//     return /^[A-Z]/.test(str);
-// }
-
-// function hasMoreThanTwoCharacters(str) {
-//     return /\w{2,}/.test(str);
-// }
-
 function isValidName(str) {
     return /^[A-Z]+[a-z]{2,}/.test(str)
 }
@@ -89,22 +76,18 @@ function showSuccess(){
 function submitFormHandler() {
     event.preventDefault()
     let firstName = form.querySelector('.fname')
-    // .value.trim()
     let lastName = form.querySelector('.lname')
-    // .value.trim()
     let phoneNumber = form.querySelector('.pnumber')
-    // .value.trim()
     let email = form.querySelector('.email')
-    // .value.trim()
     let password = form.querySelector('.password')
-    // .value.trim()
     let cPassword = form.querySelector('.cpassword')
-    // .value.trim()
 
     let descriptions = document.querySelectorAll('.error')
     descriptions.forEach(element => element.style.display = 'none')
 
     let isCorrectInput = true
+
+
 
     if(!isValidName(firstName.value.trim())){
         showInvalidInput(firstName)
@@ -116,7 +99,7 @@ function submitFormHandler() {
     }
     else {
         showValidInput(firstName)
-        isCorrectInput = true
+        console.log(firstName.value.trim())
     }
     if(!isValidName(lastName.value.trim())) {
         showInvalidInput(lastName)
@@ -128,7 +111,7 @@ function submitFormHandler() {
     }
     else {
         showValidInput(lastName)
-        isCorrectInput = true
+        console.log(lastName.value.trim())
     }
     if(!isValidNumber(phoneNumber.value.trim())){
         showInvalidInput(phoneNumber)
@@ -141,7 +124,7 @@ function submitFormHandler() {
     }
     else {
         showValidInput(phoneNumber)
-        isCorrectInput = true
+        console.log(phoneNumber.value.trim())
     }
     if(!isValidEmail(email.value.trim())) {
         showInvalidInput(email)
@@ -154,7 +137,7 @@ function submitFormHandler() {
     }
     else {
         showValidInput(email)
-        isCorrectInput = true
+        console.log(email.value.trim())
     }
     if(!isValidPassword(password.value.trim())) {
         showInvalidInput(password)
@@ -167,7 +150,7 @@ function submitFormHandler() {
     }
     else {
         showValidInput(password)
-        isCorrectInput = true
+        console.log(password.value.trim())
     }
     if(password.value.trim() != cPassword.value.trim()) {
         showInvalidInput(cPassword)
@@ -176,12 +159,10 @@ function submitFormHandler() {
         description.innerHTML = 'Password isn\'t equal'
         insertAfter(description, cPassword)
         isCorrectInput = false
-        
-
     }
     else {
         showValidInput(cPassword)
-        isCorrectInput = true
+        console.log(cPassword.value.trim())
     }
 
     if (isCorrectInput) {
