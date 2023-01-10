@@ -1,0 +1,9 @@
+.sidebar {
+    display: block;
+    width: 25%;
+    background-color: aqua;
+    height:100vh;
+}
+a{
+    display: block;
+}

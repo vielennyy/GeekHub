@@ -1,0 +1,10 @@
+.Layout {
+    display:flex;
+    flex-direction: row;
+
+}
+.layout-body {
+    background-color: aquamarine;
+    width: 75%;
+    /* height:100vh; */
+}
