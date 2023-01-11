@@ -1,9 +1,13 @@
 .sidebar {
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 25%;
     background-color: aqua;
     height:100vh;
 }
 a{
     display: block;
+}
+h1{
+    display:block;
 }
