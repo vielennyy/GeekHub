@@ -75,109 +75,110 @@ function showSuccess(){
     validInput.style.display = 'block'
 }
 
-function submitFormHandler() {
+function submitFormHandler(event) {
     event.preventDefault()
-    let firstName = form.querySelector('.fname')
-    let lastName = form.querySelector('.lname')
-    let phoneNumber = form.querySelector('.pnumber')
-    let email = form.querySelector('.email')
-    let password = form.querySelector('.password')
-    let cPassword = form.querySelector('.cpassword')
+    let firstNameField = form.querySelector('.fname')
+    let lastNameField = form.querySelector('.lname')
+    let phoneNumberField = form.querySelector('.pnumber')
+    let emailField = form.querySelector('.email')
+    let passwordField = form.querySelector('.password')
+    let cPasswordField = form.querySelector('.cpassword')
 
     let descriptions = document.querySelectorAll('.error')
     descriptions.forEach(element => element.style.display = 'none')
 
     let isCorrectInput = true
 
+    let name, surname, phone, email, password;
 
-
-    if(!isValidName(firstName.value.trim())){
-        showInvalidInput(firstName)
+    if(!isValidName(firstNameField.value.trim())){
+        showInvalidInput(firstNameField)
         let description = document.createElement('label')
         description.classList.add('error')
         description.innerHTML = 'Latin letters only. First symbol must be uppercase'
-        insertAfter(description, firstName)
+        insertAfter(description, firstNameField)
         isCorrectInput = false
     }
 
     else {
-        showValidInput(firstName)
-        user.firstName = firstName.value.trim()
+        showValidInput(firstNameField)
+        name = firstNameField.value.trim()
     }
 
-    if(!isValidName(lastName.value.trim())) {
-        showInvalidInput(lastName)
+    if(!isValidName(lastNameField.value.trim())) {
+        showInvalidInput(lastNameField)
         let description = document.createElement('label')
         description.classList.add('error')
         description.innerHTML = 'Latin letters only. First symbol must be uppercase'
-        insertAfter(description, lastName)
+        insertAfter(description, lastNameField)
         isCorrectInput = false
     }
 
     else {
-        showValidInput(lastName)
-        user.lastName = lastName.value.trim()
+        showValidInput(lastNameField)
+        surname = lastNameField.value.trim()
     }
 
-    if(!isValidNumber(phoneNumber.value.trim())){
-        showInvalidInput(phoneNumber)
+    if(!isValidNumber(phoneNumberField.value.trim())){
+        showInvalidInput(phoneNumberField)
         let description = document.createElement('label')
         description.classList.add('error')
         description.innerHTML = 'Invalid length or operator'
-        insertAfter(description, phoneNumber)
+        insertAfter(description, phoneNumberField)
         isCorrectInput = false
 
     }
 
     else {
-        showValidInput(phoneNumber)
-        user.phoneNumber = phoneNumber.value.trim()
+        showValidInput(phoneNumberField)
+        phone = phoneNumberField.value.trim()
     }
 
-    if(!isValidEmail(email.value.trim())) {
-        showInvalidInput(email)
+    if(!isValidEmail(emailField.value.trim())) {
+        showInvalidInput(emailField)
         let description = document.createElement('label')
         description.classList.add('error')
         description.innerHTML = 'Latin letters only. First symbol must be lowwercase letter'
-        insertAfter(description, email)
+        insertAfter(description, emailField)
         isCorrectInput = false
 
     }
     
     else {
-        showValidInput(email)
-        user.email = email.value.trim()
+        showValidInput(emailField)
+        email = emailField.value.trim()
     }
 
-    if(!isValidPassword(password.value.trim())) {
-        showInvalidInput(password)
+    if(!isValidPassword(passwordField.value.trim())) {
+        showInvalidInput(passwordField)
         let description = document.createElement('label')
         description.classList.add('error')
         description.innerHTML = 'Password consists at least of 8 characters. It should include at least one number, uppercase letter and special character'
-        insertAfter(description, password)
+        insertAfter(description, passwordField)
         isCorrectInput = false
 
     }
 
     else {
-        showValidInput(password)
+        showValidInput(passwordField)
     }
 
-    if(!isValidPassword(password.value.trim()) || password.value.trim() != cPassword.value.trim()) {
-        showInvalidInput(cPassword)
+    if(!isValidPassword(passwordField.value.trim()) || passwordField.value.trim() != cPasswordField.value.trim()) {
+        showInvalidInput(cPasswordField)
         let description = document.createElement('label')
         description.classList.add('error')
         description.innerHTML = 'Password isn\'t equal'
-        insertAfter(description, cPassword)
+        insertAfter(description, cPasswordField)
         isCorrectInput = false
     }
 
     else {
-        showValidInput(cPassword)
-        user.password = cPassword.value.trim()
+        showValidInput(cPasswordField)
+        password = cPasswordField.value.trim()
     }
 
     if (isCorrectInput) {
+        let user = {name, surname, phone, password}
         console.log(user)
         showSuccess()
     }
