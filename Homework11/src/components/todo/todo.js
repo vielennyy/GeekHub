@@ -4,10 +4,10 @@ import { Link, useParams } from "react-router-dom";
 export const Todo = () => {
     const [todo, setTodo] = useState([]);
 
-    const {id} = useParams();
+    // const {id} = useParams();
 
     useEffect( () => {
-        fetch(`https://jsonplaceholder.typicode.com/users/1/todos?id=${id}`)
+        fetch(`https://jsonplaceholder.typicode.com/users/1/todos?id=1`)
             .then((response) => response.json())
             .then((json) => setTodo(json));
     }, [])

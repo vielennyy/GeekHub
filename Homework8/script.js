@@ -1,5 +1,7 @@
 let form = document.querySelector('form')
 
+let user = {}
+
 function isValidName(str) {
     return /^[A-Z]+[a-z]{2,}/.test(str)
 }
@@ -97,10 +99,12 @@ function submitFormHandler() {
         insertAfter(description, firstName)
         isCorrectInput = false
     }
+
     else {
         showValidInput(firstName)
-        console.log(firstName.value.trim())
+        user.firstName = firstName.value.trim()
     }
+
     if(!isValidName(lastName.value.trim())) {
         showInvalidInput(lastName)
         let description = document.createElement('label')
@@ -109,10 +113,12 @@ function submitFormHandler() {
         insertAfter(description, lastName)
         isCorrectInput = false
     }
+
     else {
         showValidInput(lastName)
-        console.log(lastName.value.trim())
+        user.lastName = lastName.value.trim()
     }
+
     if(!isValidNumber(phoneNumber.value.trim())){
         showInvalidInput(phoneNumber)
         let description = document.createElement('label')
@@ -122,10 +128,12 @@ function submitFormHandler() {
         isCorrectInput = false
 
     }
+
     else {
         showValidInput(phoneNumber)
-        console.log(phoneNumber.value.trim())
+        user.phoneNumber = phoneNumber.value.trim()
     }
+
     if(!isValidEmail(email.value.trim())) {
         showInvalidInput(email)
         let description = document.createElement('label')
@@ -135,10 +143,12 @@ function submitFormHandler() {
         isCorrectInput = false
 
     }
+    
     else {
         showValidInput(email)
-        console.log(email.value.trim())
+        user.email = email.value.trim()
     }
+
     if(!isValidPassword(password.value.trim())) {
         showInvalidInput(password)
         let description = document.createElement('label')
@@ -148,11 +158,12 @@ function submitFormHandler() {
         isCorrectInput = false
 
     }
+
     else {
         showValidInput(password)
-        console.log(password.value.trim())
     }
-    if(password.value.trim() != cPassword.value.trim()) {
+
+    if(!isValidPassword(password.value.trim()) || password.value.trim() != cPassword.value.trim()) {
         showInvalidInput(cPassword)
         let description = document.createElement('label')
         description.classList.add('error')
@@ -160,12 +171,14 @@ function submitFormHandler() {
         insertAfter(description, cPassword)
         isCorrectInput = false
     }
+
     else {
         showValidInput(cPassword)
-        console.log(cPassword.value.trim())
+        user.password = cPassword.value.trim()
     }
 
     if (isCorrectInput) {
+        console.log(user)
         showSuccess()
     }
 
