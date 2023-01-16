@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react'
+import React, {Component} from 'react'
 import './background.css'
 
 export class Background extends Component {
@@ -6,9 +6,12 @@ export class Background extends Component {
         super(props)
     }
 
+
     render() {
+        const {r, g, b} = this.props
+
         const styleObj = {
-            background: `rgb(${this.props.r},${this.props.g},${this.props.b})`
+            background: `rgb(${r},${g},${b})`
         }
         return (
             <div className='background' style = {styleObj}>

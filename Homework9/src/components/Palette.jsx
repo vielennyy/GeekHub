@@ -17,15 +17,9 @@ export class Palette extends Component {
             averageB: 127,
             dominantColor: 'COLORS ARE EQUAL',
         }
-    }    
-    updateState(value) {
-        this.setState({r: value.r, g: value.g, b: value.b})
-
-
         this.changeColor = this.changeColor.bind(this)
         this.getAverage = this.getAverage.bind(this)
-        this.getDominantColor = this.getDominantColor(this)
-    }
+    }    
 
     getRndInteger() {
         return Math.floor(Math.random() * (127 + 1) );
@@ -33,13 +27,10 @@ export class Palette extends Component {
 
 
     changeColor() {
-        let r = this.getRndInteger()
-        let g = this.getRndInteger()
-        let b = this.getRndInteger()
         this.setState({
-            r: r,
-            g: g,
-            b: b,
+            r: this.getRndInteger(),
+            g: this.getRndInteger(),
+            b: this.getRndInteger(),
             counter: ++this.state.counter,
         })
     }
@@ -49,20 +40,11 @@ export class Palette extends Component {
         let r = this.state.r
         let g = this.state.g
         let b = this.state.b
-        if (this.state.counter === 1){
-            this.setState({
-                averageR: (r + this.state.averageR)/(this.state.counter+1).toFixed(),
-                averageG: (g + this.state.averageG)/(this.state.counter+1).toFixed(),
-                averageB: (b + this.state.averageB)/(this.state.counter+1).toFixed(),
-            })
-        }
-        else {
-            this.setState({
-                averageR: (r + this.state.averageR*this.state.counter+1)/(this.state.counter+1).toFixed(),
-                averageG: (g + this.state.averageG*this.state.counter+1)/(this.state.counter+1).toFixed(),
-                averageB: (b + this.state.averageB*this.state.counter+1)/(this.state.counter+1).toFixed(),
-            })
-        }
+        this.setState({
+            averageR: +((r + this.state.averageR*this.state.counter)/(this.state.counter+1)).toFixed(),
+            averageG: +((g + this.state.averageG*this.state.counter)/(this.state.counter+1)).toFixed(),
+            averageB: +((b + this.state.averageB*this.state.counter)/(this.state.counter+1)).toFixed(),
+        })
     }
 
     getDominantColor() {
@@ -82,7 +64,6 @@ export class Palette extends Component {
                 this.setState({dominantColor: 'COLORS ARE EQUAL'})
             }
         }
-
     }
 
     render() {
@@ -93,6 +74,7 @@ export class Palette extends Component {
                 <div className='background' onClick = {async() => {
                     await this.changeColor()
                     await this.getAverage()
+                    console.log(this.state.counter, this.state.averageR, this.state.averageG, this.state.averageB)
                     await this.getDominantColor()
                     }}>
                     <Background r={this.state.r} g={this.state.g} b={this.state.b}/>
