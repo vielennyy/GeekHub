@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import {EditUserProfile, ChangePasswordForm} from './components/LoginForm/LoginForm'
+import {ChangePasswordForm} from './components/ChangePasswordForm'
+import { EditUserProfile } from './components/RegisterForm/RegisterForm';
 
 const fakeRequest = async () => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -18,7 +19,7 @@ function App() {
   })
   return (
     <div className="App">
-      {/* <EditUserProfile></EditUserProfile> */}
+      <EditUserProfile></EditUserProfile>
       <ChangePasswordForm></ChangePasswordForm>
     </div>
   );
