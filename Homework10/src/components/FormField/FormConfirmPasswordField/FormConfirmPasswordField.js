@@ -1,16 +1,19 @@
-import { validatePassword } from "../../../helpers/validate";
+import { validateConfirmPassword } from "../../../helpers/validate";
+import { useFormContext } from "../../Form/Form";
 import { PasswordInput } from "../../PasswordInput";
 
 
-export const FormPasswordField = ({
+export const FormConfirmPasswordField = ({
     onChange: propsOnChange,
     onError,
     required,
     ...rest
 }) => {
+    const { values } = useFormContext()
+    const { password } = values
     const onChange = (event) => {
         const {value} = event.target;
-        onError(validatePassword(value, {required}))
+        onError(validateConfirmPassword(password, value))
         propsOnChange(value)
     }
 

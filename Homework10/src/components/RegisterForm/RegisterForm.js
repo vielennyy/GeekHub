@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Form } from '../Form/Form';
 import { FormField } from '../FormField/FormField';
 
-export const EditUserProfile = () => {
+export const RegisterForm = () => {
   const [isGroupAccount, setIsGroupAccount] = useState(false);
 
   const onSubmit = (values) => {
@@ -16,7 +16,9 @@ export const EditUserProfile = () => {
       {/*
         Тут зробити чекбокс який буде переключати `setIsGroupAccount`
       */}
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmit} style={{maxWidth: '20rem', margin: '2rem auto'}}>
+      <fieldset>
+      <legend>Registration Form</legend>
         {isGroupAccount ? (
           <FormField
             required
@@ -56,7 +58,7 @@ export const EditUserProfile = () => {
           label="Phone"
           placeholder="Type here..."
         />
-        <FormField
+        {/* <FormField
           required
           type="select"
           name="gender"
@@ -66,8 +68,8 @@ export const EditUserProfile = () => {
             { value: 'female', label: 'Female' },
             { value: 'other', label: 'Unspecified or Nonbinary' }
           ]}
-        />
-        <FormField
+        /> */}
+        {/* <FormField
           required
           type="radio"
           name="prefer"
@@ -77,7 +79,7 @@ export const EditUserProfile = () => {
             { value: 'pepsi', label: 'Pepsi' },
             { value: 'cola', label: 'Cola' }
           ]}
-        />
+        /> */}
         <FormField
           required
           type="checkboxes"
@@ -102,6 +104,7 @@ export const EditUserProfile = () => {
             </>
           )}
         />
+        </fieldset>
       </Form>
     </>
   );

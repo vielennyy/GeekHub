@@ -6,6 +6,8 @@ import { useFormContext } from '../Form/Form';
 import { FormNameField } from './FormNameField';
 import { FormInput } from './FormInput';
 import { FormPasswordField } from './FormPasswordField';
+import { FormConfirmPasswordField } from './FormConfirmPasswordField';
+import { FormCheckboxes } from './FormCheckboxes'
 
 // import './FormField.css'
 
@@ -36,10 +38,14 @@ export const FormField = ({
 
     return (
         <div className='FormField'>
-            <label htmlFor={getInputId(id)}>{label}</label>
+            {type !== 'checkboxes' && (
+                <label htmlFor={getInputId(id)}>{label}</label>
+            )}
+            <br></br>
             <Component
                 {...rest}
-                id={id}
+                id={type === 'checkboxes' ? undefined : getInputId(id)}
+                label={type === 'checkboxes' ? label : undefined}
                 type={type}
                 name={name}
                 onChange={onChange}
@@ -48,6 +54,7 @@ export const FormField = ({
                 aria-describedby={getErrorId(innerId)}
                 required={required}
             />
+            <br></br>
             {error && (
                 <span id={getErrorId(innerId)}
                 style={{color:'red'}}
@@ -62,12 +69,16 @@ export const FormField = ({
 
 function useFormFieldComponent(type){
     switch (type) {
-        case 'password':
-            return PasswordInput;
+        // case 'password':
+        //     return PasswordInput;
         case 'name':
             return FormNameField;
         case 'password':
             return FormPasswordField;
+        case 'confirmPassword':
+            return FormConfirmPasswordField;
+        case 'checkboxes':
+            return FormCheckboxes;
         default:
             return FormInput;
     }

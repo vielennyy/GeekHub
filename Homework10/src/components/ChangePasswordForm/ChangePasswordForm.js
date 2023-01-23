@@ -25,6 +25,7 @@ export const ChangePasswordForm = () => {
             return (
               <fieldset>
                 <legend>Change Password Form</legend>
+                <br></br>
                 <FormField
                   required
                   type="password"
@@ -37,6 +38,7 @@ export const ChangePasswordForm = () => {
                   name="confirmPassword"
                   label="Confirm Password"
                 />
+                <br></br>
                 <FormSubmit/>
               </fieldset>
             )
