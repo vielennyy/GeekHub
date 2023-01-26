@@ -25,7 +25,6 @@ export const ChangePasswordForm = () => {
             return (
               <fieldset>
                 <legend>Change Password Form</legend>
-                <br></br>
                 <FormField
                   required
                   type="password"
