@@ -1,0 +1,1 @@
+import { NewsList} from './NewsList'
