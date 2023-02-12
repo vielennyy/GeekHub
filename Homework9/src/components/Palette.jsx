@@ -21,6 +21,7 @@ export class Palette extends Component {
         }
         this.changeColor = this.changeColor.bind(this)
         this.getAverage = this.getAverage.bind(this)
+        this.addColors = this.addColors.bind(this)
     }    
 
     getRndInteger() {
@@ -36,11 +37,8 @@ export class Palette extends Component {
             counter: ++this.state.counter,
         })
     }
-    
 
-    getAverage() {
-        // console.log(this.state.r, this.state.g, this.state.b)
-
+    addColors() {
         let r = this.state.r
         let g = this.state.g
         let b = this.state.b
@@ -48,8 +46,15 @@ export class Palette extends Component {
         this.setState({
             colorsList: [...list, {r, g, b}]
         })
-        console.log(this.state.colorsList)
+    }
 
+    getAverage() {
+        // console.log(this.state.r, this.state.g, this.state.b)
+
+        let r = this.state.r
+        let g = this.state.g
+        let b = this.state.b
+        
         let averangeColorSum = {red:0, green:0, blue:0}
         this.state.colorsList.forEach(({r, g, b}) => {
             averangeColorSum.red += r
@@ -57,12 +62,11 @@ export class Palette extends Component {
             averangeColorSum.blue += b
         });
 
-        // console.log(averangeColorSum)
         let { red, green, blue } = averangeColorSum
-        // console.log('summ: '+ red, green, blue)
+        console.log('summ: '+ red, green, blue)
 
         this.setState({
-            averageColor: {r: +(red/this.state.counter).toFixed(), g: +(green/this.state.counter).toFixed(), b: +(blue/this.state.counter).toFixed(),}
+            averageColor: {r: +(red/(this.state.counter+1)).toFixed(), g: +(green/(this.state.counter+1)).toFixed(), b: +(blue/(this.state.counter+1)).toFixed(),}
 
         })
         this.setState({
@@ -99,15 +103,17 @@ export class Palette extends Component {
                 <DominantColor dominantColor={this.state.dominantColor}/>
                 <div className='background' onClick = {async() => {
                     await this.changeColor()
+                    await this.addColors()
+                    // console.log(this.state.colorsList)
                     await this.getAverage()
                     console.log(this.state.averageColor)
-
                     console.log(this.state.counter, this.state.averageR, this.state.averageG, this.state.averageB)
                     await this.getDominantColor()
                     }}>
                     <Background r={this.state.r} g={this.state.g} b={this.state.b}/>
                 </div>
-                <AverageColor r={this.state.averageR} g={this.state.averageG} b={this.state.averageB}/>
+                <AverageColor average={this.state.averageColor}/>
+                {/* <AverageColor r={this.state.averageR} g={this.state.averageG} b={this.state.averageB}/> */}
 
             </div>
         )
