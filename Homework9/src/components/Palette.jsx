@@ -16,6 +16,8 @@ export class Palette extends Component {
             averageG: 127,
             averageB: 127,
             dominantColor: 'COLORS ARE EQUAL',
+            colorsList: [{r:127, g:127, b:127}],
+            averageColor: {r: 127, g: 127, b: 127},
         }
         this.changeColor = this.changeColor.bind(this)
         this.getAverage = this.getAverage.bind(this)
@@ -34,22 +36,46 @@ export class Palette extends Component {
             counter: ++this.state.counter,
         })
     }
+    
 
     getAverage() {
+        // console.log(this.state.r, this.state.g, this.state.b)
 
         let r = this.state.r
         let g = this.state.g
         let b = this.state.b
+        let list = [...this.state.colorsList]
+        this.setState({
+            colorsList: [...list, {r, g, b}]
+        })
+        console.log(this.state.colorsList)
+
+        let averangeColorSum = {red:0, green:0, blue:0}
+        this.state.colorsList.forEach(({r, g, b}) => {
+            averangeColorSum.red += r
+            averangeColorSum.green += g
+            averangeColorSum.blue += b
+        });
+
+        // console.log(averangeColorSum)
+        let { red, green, blue } = averangeColorSum
+        // console.log('summ: '+ red, green, blue)
+
+        this.setState({
+            averageColor: {r: +(red/this.state.counter).toFixed(), g: +(green/this.state.counter).toFixed(), b: +(blue/this.state.counter).toFixed(),}
+
+        })
         this.setState({
             averageR: +((r + this.state.averageR*this.state.counter)/(this.state.counter+1)).toFixed(),
             averageG: +((g + this.state.averageG*this.state.counter)/(this.state.counter+1)).toFixed(),
             averageB: +((b + this.state.averageB*this.state.counter)/(this.state.counter+1)).toFixed(),
         })
+        // console.log(this.state.averageR, this.state.averageG, this.state.averageG)
     }
 
     getDominantColor() {
 
-        console.log(this.state.r, this.state.g, this.state.b)
+        // console.log(this.state.r, this.state.g, this.state.b)
         if(this.state.r > this.state.g && this.state.r > this.state.b) {
             this.setState({dominantColor: 'RED'})
         }
@@ -74,6 +100,8 @@ export class Palette extends Component {
                 <div className='background' onClick = {async() => {
                     await this.changeColor()
                     await this.getAverage()
+                    console.log(this.state.averageColor)
+
                     console.log(this.state.counter, this.state.averageR, this.state.averageG, this.state.averageB)
                     await this.getDominantColor()
                     }}>
