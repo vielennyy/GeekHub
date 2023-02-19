@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 // import { Balloon } from '../Balloon'
 import { Balloon } from '../Balloon.js'
-import { useState, useContext } from 'react'
+import { useState, useEffect } from 'react'
 
 const Backgroound = styled.div`
 background-color: blue;
@@ -16,7 +16,7 @@ export const getRndInteger = (min, max) => {
 export const Field = () => {
     const [score, setScore] = useState(0)
     const [balloons, setBallons] = useState([])
-    // const [display, setDisplay] = useState('block')
+    const [display, setDisplay] = useState('block')
 
 
     function addBallons() {
@@ -29,23 +29,35 @@ export const Field = () => {
     }
 
     
+    useEffect(()=>{
+        const interval = setInterval(addBallons, 10000)
+        return () => clearInterval(interval);
+    }, [balloons])
     
-    setInterval(addBallons, 5000)
 
     function createBalloon() {
         return {
             size: getRndInteger(50, 255).toString()+'px',
             positionX: getRndInteger(1, 500).toString()+'px',
             positionY: getRndInteger(1, 500).toString()+'px',
-            display: 'block',
+            display: display,
         }
     }
     
+    // function disapearBalloon(){
+    //     setDisplay('none')
+    //     console.log('click')
+    // }
+
+    function clickHandler(e){
+        e.preventDefault()
+        console.log('click')
+    }
 
     return(
         <>
         <Backgroound>
-            {balloons.map(el=> <Balloon/>)}
+            {balloons.map(el=> <Balloon onClick = {clickHandler} props={createBalloon()}/>)}
             {/* <Balloon/> */}
         </Backgroound>
         </>

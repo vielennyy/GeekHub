@@ -14,20 +14,20 @@ background-color: white;
 opacity: 0.5;
 `
 
-export const getRndInteger = (min, max) => {
-    return Math.floor(Math.random() * (max - min) + min);
-}
+// export const getRndInteger = (min, max) => {
+//     return Math.floor(Math.random() * (max - min) + min);
+// }
 
-export const Balloon = () => {
+export const Balloon = (props) => {
 
-    const [display, setDisplay] = useState('block')
+    // const [display, setDisplay] = useState('block')
 
-    const props = {
-        size: getRndInteger(50, 255).toString()+'px',
-        positionX: getRndInteger(1, 500).toString()+'px',
-        positionY: getRndInteger(1, 500).toString()+'px',
-        display: display,
-    }
+    // const props = {
+    //     size: getRndInteger(50, 255).toString()+'px',
+    //     positionX: getRndInteger(1, 500).toString()+'px',
+    //     positionY: getRndInteger(1, 500).toString()+'px',
+    //     display: display,
+    // }
 
     // const size = getRndInteger(50, 255).toString()+'px'
     // const positionX = getRndInteger(1, 500).toString()+'px'
@@ -36,14 +36,12 @@ export const Balloon = () => {
 
     // console.log(size, positionX, positionY)
 
-    function disapearBalloon(){
-        setDisplay('none')
-        console.log('click')
-    }
+    // console.log(props.props)
+    const balloonProps = props.props
 
     return (
-        <div onClick={() => {disapearBalloon()}}>
-        <BalloonStyle props = {props}/>
+        <div>
+        <BalloonStyle props = {balloonProps}/>
         </div>
     )
 }
