@@ -5,8 +5,6 @@ import { ThemeProvider } from "styled-components";
 import { Navbar } from "./components/Navbar";
 import { List } from "./components/List"
 
-
-
 const GlobalStyles = createGlobalStyle`
   *{
     margin: 0;
@@ -32,8 +30,6 @@ const darktheme = {
   link: 'gray',
   text: '#fff',
 }
-
-
 
 function App() {
   const [mode, setMode] = useState(false);

@@ -41,7 +41,6 @@ height:50px;
 function App() {
 
   const [isStarted, setIsStarted] = useState(false)
-  // setIsStarted(false)
 
   function startGame () {
     setIsStarted(true);
