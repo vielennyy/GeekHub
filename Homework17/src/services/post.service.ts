@@ -1,15 +1,16 @@
 // import { Pagination } from '../common/types-and-interfaces'
+import { ObjectId } from 'mongoose';
 import { PostModel, Post, User, UserModel } from '../models';
 
 
 export class PostService {
     
     async addPost(
-        userId:string,
-        theme:string, 
-        text:string, 
+        userId: string,
+        theme: string, 
+        text: string, 
         ): Promise<Post | null> {
-            const user: User | null = await UserModel.findById({userId});
+            const user: User | null = await UserModel.findById(userId);
             if(user === null){
                 return user;
             }
@@ -17,6 +18,36 @@ export class PostService {
                 return PostModel.create({ userId, theme, text });
             }
         }
+
+    async deletePost(
+        postId: string,
+    ): Promise<void | null> {
+        const post: Post | null = await PostModel.findById(postId);
+        if (post === null){
+            return post;
+        }
+        else {
+            await PostModel.findByIdAndDelete(postId)
+        }
+    }
+
+    async editPost(postId: string, theme: string, text: string): Promise<Post | null> {
+    const post: Post | null = await PostModel.findById(postId);
+    if (post === null){
+        return post;
+    }
+    else {
+        const updatedPost: Post | null = await PostModel.findByIdAndUpdate(postId,
+            { theme, text },
+            { new: true } // returns the updated document
+        );
+        return updatedPost;
+    } 
+    }
+
+      
+
+
 }
 
     // async isCreated (id:number):Promise<boolean>{

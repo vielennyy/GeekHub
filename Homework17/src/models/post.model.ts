@@ -10,7 +10,7 @@ export class Post {
     id!: Types.ObjectId;
 
     @prop({ required: true} )
-    userId!: string;
+    userId!: Types.ObjectId;
 
     @prop({ required: true })
     theme!: string;

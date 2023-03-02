@@ -9,9 +9,7 @@ export class UserController {
         this.router.post('/register', this.register);
         this.router.post('/login', this.login);
         this.router.post('/:userId', this.createPost);
-        // this.router.delete('/:postId', this.deletePost);
         // this.router.get('/:userId/:page', this.getPosts);
-        // this.router.patch('/:postId', this.editPost);
     }
 
     register = async (req:Request, res:Response, next:NextFunction) => {
@@ -26,10 +24,9 @@ export class UserController {
         else {
             console.log(`User ${login} is already registered`);
             const error = customError.errorHandler(409, "This user is already exist", res);
-            // res.status(409).send(user);
         }
-        // const user = await userService.addUser(login, password);
     }
+
     login = async (req:Request, res:Response, next:NextFunction) => {
         const {login, password} = req.body;
         let user = await userService.login(login, password);
@@ -42,26 +39,26 @@ export class UserController {
     }
 
     createPost = async (req:Request, res:Response, next:NextFunction) => {
-        // const userId = req.params.userId;
-        // const {theme, text} = req.body;
-        const post = await postService.addPost(req, res, theme, text);
-        // // console.log(userId)
-        // const isAuthorithed = await userService.isAuthorithed(userId)
-        // console.log("isAythorithed"+isAuthorithed);
-        // if (isAuthorithed) {
-        //     const {theme, text} = req.body;
-
-        //     const post = await postService.addPost(userId, theme, text);
-        //     res.send(post);
-        // }
-        // else {
-        //     console.log("User is not exist")
-        //     res.status(401);
-        //     res.send("User is not exist")
-        // }
+        const userId = req.params.userId;
+        const {theme, text} = req.body;
+        const post = await postService.addPost(userId, theme, text);
+        if (post === null){
+            const error = customError.errorHandler(404, "This user is not found", res);
+        }
+        else {
+            res.send(post);
+        }
     }
+
     deletePost = async (req:Request, res:Response, next:NextFunction) => {
-        // const postId = +req.params.postId;
+        const postId = req.params.postId;
+        const post = await postService.deletePost(postId);
+        if (post === null){
+            const error = customError.errorHandler(404, "This post is not found", res);
+        }
+        else {
+            res.send(`Post ${postId} is deleted`);
+        }
         // const isCreated = await postService.isCreated(postId);
         // if(isCreated) {
         //     const posts = await postService.deletePost(postId);
