@@ -1,6 +1,7 @@
 // import { Pagination } from '../common/types-and-interfaces'
-import { ObjectId } from 'mongoose';
+import { Types } from 'mongoose';
 import { PostModel, Post, User, UserModel } from '../models';
+import { HttpError } from '../common/errors';
 
 
 export class PostService {
@@ -9,13 +10,29 @@ export class PostService {
         userId: string,
         theme: string, 
         text: string, 
-        ): Promise<Post | null> {
+        ): Promise<Post> {
             const user: User | null = await UserModel.findById(userId);
-            if(user === null){
-                return user;
+            if(user){
+                return PostModel.create({ userId: new Types.ObjectId(userId), theme, text });
+            } else {
+                throw new HttpError(404, "User with this id was not found");
             }
-            else {
-                return PostModel.create({ userId, theme, text });
+        }
+
+        async getUserPosts(
+            // login: string,
+            // password:string, 
+            // isAdmin:boolean = false,
+            id: string,
+        ): Promise<Post[]> {
+            const user: User | null = await UserModel.findById(id); 
+            const posts: Post[] | null = await PostModel.find({ userId: new Types.ObjectId(id) });
+            if (posts) {
+                return posts;
+            } else if (user) {
+                throw new HttpError(200, "User has no posts");
+            } else {
+                throw new HttpError(404, "User with this id was not found");
             }
         }
 
@@ -23,26 +40,26 @@ export class PostService {
         postId: string,
     ): Promise<void | null> {
         const post: Post | null = await PostModel.findById(postId);
-        if (post === null){
-            return post;
+        if (post){
+            await PostModel.findByIdAndDelete(postId)
         }
         else {
-            await PostModel.findByIdAndDelete(postId)
+            throw new HttpError(404, "Post is not found");
         }
     }
 
     async editPost(postId: string, theme: string, text: string): Promise<Post | null> {
-    const post: Post | null = await PostModel.findById(postId);
-    if (post === null){
-        return post;
-    }
-    else {
-        const updatedPost: Post | null = await PostModel.findByIdAndUpdate(postId,
-            { theme, text },
-            { new: true } // returns the updated document
-        );
-        return updatedPost;
-    } 
+        const post: Post | null = await PostModel.findById(postId);
+        if (post){
+            const updatedPost: Post | null= await PostModel.findByIdAndUpdate(postId,
+                { theme, text },
+                { new: true } // returns the updated document
+            );
+            return updatedPost;
+        }
+        else {
+            throw new HttpError(404, "Post is not found");
+        } 
     }
 
       

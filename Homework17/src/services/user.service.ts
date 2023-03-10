@@ -1,44 +1,39 @@
-import { UserModel, User } from '../models';
+import { ObjectId, PipelineStage, Types } from 'mongoose';
+import { UserModel, PostModel, User, Post } from '../models';
+import { HttpError } from '../common/errors';
 
 export class UserService {
+
     async addUser(
         login:string, 
         password:string, 
         isAdmin:boolean = false
         ): Promise<User> {
-            return UserModel.create({ login, password, isAdmin });
+
+            const user = await UserModel.findOne({login, password});
+            if (user) {
+                throw new HttpError(409, "This user is already exist");
+            } else {
+                console.log(`User ${login} registered`);
+                return UserModel.create({ login, password, isAdmin });
+            }
     }
 
     async login(
         login: string,
         password:string, 
         isAdmin:boolean = false,
-        // id: string,
-    ): Promise<User[] | null> {
-        const user: User[] = await UserModel.find({login});
-        if(user.length === 0){
-            return null;
+    ): Promise<User> {
+
+        const user: User | null = await UserModel.findOne({login, password});
+        if(user){
+            console.log("Log in. Success!")
+            return user;
+        } else {
+            throw new HttpError(404, "Incorrect login or password");
         }
-        return user;
     }
 
-    // async isAuthorithed(
-    //     id:number, 
-    //     ): Promise<boolean>  {
-    //         const user: User|undefined = this.db.find((user) => user.id === id)
-    //         if (user === undefined) return false;
-    //         return true;
-    // }
-
-    // async findUser(
-    //     login:string, 
-    //     password:string, 
-    //     ): Promise<User | undefined>  {
-    //         const user: User|undefined = this.db.find((user) => user.login === login && user.password === password)
-    //         console.log(`Our database = ${JSON.stringify(this.db)}`)
-    //         console.log(`Our user: ${JSON.stringify(user)}`)
-    //         return user
-    // }
 }
 
 export const userService = new UserService();
