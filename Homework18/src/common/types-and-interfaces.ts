@@ -17,4 +17,10 @@ export interface IControllerRoute {
     validators?: Validation;
 }
 
+export interface Socials {
+    facebook: string;
+    instagram: string;
+    twitter: string;
+}
+
 export type Validation = Record<string, any>;

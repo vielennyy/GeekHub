@@ -5,27 +5,24 @@ import { HttpError } from '../common/errors';
 export class UserService {
 
     async addUser(
-        login:string, 
-        password:string, 
-        isAdmin:boolean = false
+        params: object,
         ): Promise<User> {
 
-            const user = await UserModel.findOne({login, password});
+            const user = await UserModel.findOne(params);
+
             if (user) {
                 throw new HttpError(409, "This user is already exist");
             } else {
-                console.log(`User ${login} registered`);
-                return UserModel.create({ login, password, isAdmin });
+                console.log(`User registered`);
+                return UserModel.create(params);
             }
     }
 
     async login(
-        login: string,
-        password:string, 
-        isAdmin:boolean = false,
+        params: object,
     ): Promise<User> {
 
-        const user: User | null = await UserModel.findOne({login, password});
+        const user: User | null = await UserModel.findOne(params);
         if(user){
             console.log("Log in. Success!")
             return user;

@@ -7,7 +7,7 @@ import { Logger } from 'tslog'
 export class ExeptionFilter implements IExeptionFilter {
     readonly logger = new Logger();
 
-    catch (err: Error | HttpError,
+    catch (err: Error | HttpError | ValidationError,
            req: Request,
            res: Response,
            next: NextFunction ): void {

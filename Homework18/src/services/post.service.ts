@@ -7,22 +7,17 @@ import { HttpError } from '../common/errors';
 export class PostService {
     
     async addPost(
-        userId: string,
-        theme: string, 
-        text: string, 
+        params: object,
         ): Promise<Post> {
-            const user: User | null = await UserModel.findById(userId);
+            const user: User | null = await UserModel.findOne(params);
             if(user){
-                return PostModel.create({ userId: new Types.ObjectId(userId), theme, text });
+                return PostModel.create(params);
             } else {
                 throw new HttpError(404, "User with this id was not found");
             }
         }
 
         async getUserPosts(
-            // login: string,
-            // password:string, 
-            // isAdmin:boolean = false,
             id: string,
         ): Promise<Post[]> {
             const user: User | null = await UserModel.findById(id); 
@@ -61,58 +56,6 @@ export class PostService {
             throw new HttpError(404, "Post is not found");
         } 
     }
-
-      
-
-
 }
-
-    // async isCreated (id:number):Promise<boolean>{
-    //     const post: Post|undefined = this.db.find((post) => post.id === id)
-    //     if (post === undefined) return false;
-    //     return true;
-    // }
-
-    // async deletePost(id:number): Promise<Post[]>{
-    //     const filterredPosts = this.db.filter(post => post.id !== id)
-    //     this.db = filterredPosts;
-    //     // console.log(this.db)
-    //     return filterredPosts;
-    // }
-
-    // async getPosts(userId:number): Promise<Post[]>{
-    //     const userPosts = this.db.filter((post) => post.userId === userId);
-    //     return userPosts;
-    // }
-
-    // pagination (take:number, skip:number, array:Post[]):Pagination {
-    //     const userPosts = array;
-
-    //     const showCurrentPage = userPosts.slice(skip, skip+take);
-
-    //     return {
-    //         total: array.length,
-    //         data: showCurrentPage,
-    //     }  
-    // }
-
-    // async editPost(id: number, theme: string, text: string): Promise<Post | undefined> {
-    //     const post = this.db.find((post) => post.id === id);
-      
-    //     if (!post) {
-    //       return undefined;
-    //     }
-      
-    //     if (theme !== null && theme !== undefined && theme !== post.theme) {
-    //       post.theme = theme;
-    //     }
-    //     if (text !== null && text !== undefined && text !== post.text) {
-    //       post.text = text;
-    //     }
-      
-    //     return post;
-    //   }
-
-// }
 
 export const postService = new PostService();

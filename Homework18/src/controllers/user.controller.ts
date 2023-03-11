@@ -1,13 +1,7 @@
 import express, { NextFunction, Response, Request } from "express"
 import { BaseController } from "../common/abstract/base.controller";
 import { userService, postService } from "../services";
-import Joi from "joi";
-
-const registerBodySchema = Joi.object({
-        login: Joi.string().min(3).max(254).required(),
-        password: Joi.string().min(3).max(254).required(),
-    });
-
+import { registerBodySchema } from "../common/validation.shemmas";
 
 export class UserController extends BaseController {
 
@@ -20,7 +14,6 @@ export class UserController extends BaseController {
                 handler: this.register,
                 validators: {
                     body: registerBodySchema,
-                    query: registerBodySchema,
                 }
             },
             {
@@ -43,33 +36,24 @@ export class UserController extends BaseController {
         ])
     }
 
-    
-    // const result = registerBodySchema.validate(
-    //     {login: "Sasha", text1: 1},
-    //     {abortEarly: false, allowUnknown: true, stripUnknown: true});
-    // this.logger.error(result);
-
     register = async (req:Request, res:Response, next:NextFunction) => {
             
             const {login, password} = req.body;
-            const user = await userService.addUser(login, password);
+            const user = await userService.addUser(req.body);
             res.send(user);
 
     }
 
     login = async (req:Request, res:Response, next:NextFunction) => {
 
-            const {login, password} = req.body;
-            const user = await userService.login(login, password);
+            const user = await userService.login(req.body);
             res.send(user);
         
     }
 
     createPost = async (req:Request, res:Response, next:NextFunction) => {
 
-            const userId = req.params.userId;
-            const {theme, text} = req.body;
-            const post = await postService.addPost(userId, theme, text);
+            const post = await postService.addPost(req.body);
             res.send(post);
         
     }

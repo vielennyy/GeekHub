@@ -13,7 +13,7 @@ export class Post {
     userId!: Types.ObjectId;
 
     @prop({ required: true })
-    theme!: string;
+    topic!: string;
 
     @prop({ required: true} )
     text!: string;
